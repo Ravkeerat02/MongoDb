@@ -1,0 +1,230 @@
+Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb+srv://RK_02:crazyShit@cluster0.iu4uasl.mongodb.net/test
+Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb+srv://RK_02:crazyShit@cluster0.iu4uasl.mongodb.net/test
+Current Mongosh Log ID: 63cb8bcceb0ee11b974707a0
+Connecting to:          mongodb+srv://<credentials>@cluster0.iu4uasl.mongodb.net/test?appName=mongosh+1.6.2
+Using MongoDB:          5.0.14
+Using Mongosh:          1.6.2
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+Atlas atlas-keft0m-shard-0 [primary] test>
+
+Atlas atlas-keft0m-shard-0 [primary] test> show dbs
+Course             8.00 KiB
+assignment_db    216.00 KiB
+comp3123_db      144.00 KiB
+online_practice    8.00 KiB
+admin            336.00 KiB
+local            661.78 MiB
+Atlas atlas-keft0m-shard-0 [primary] test> use appdb
+switched to db appdb
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.insertOne({name:"JANE dOE}})
+Uncaught:
+SyntaxError: Unterminated string constant. (1:25)
+
+> 1 | db.users.insertOne({name:"JANE dOE}})
+    |                          ^
+  2 |
+
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.insertOne({name:"JANE dOE"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("63cb8c10bfc36b14836dfbc0")
+}
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find()
+[ { _id: ObjectId("63cb8c10bfc36b14836dfbc0"), name: 'JANE dOE' } ]
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.insertOne({name:"Mike" , age:20 , hobbies:["singing"]})
+{
+  acknowledged: true,
+  insertedId: ObjectId("63cb8cc5bfc36b14836dfbc1")
+}
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find()
+[
+  { _id: ObjectId("63cb8c10bfc36b14836dfbc0"), name: 'JANE dOE' },
+  {
+    _id: ObjectId("63cb8cc5bfc36b14836dfbc1"),
+    name: 'Mike',
+    age: 20,
+    hobbies: [ 'singing' ]
+  }
+]
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.insertMany([{name:"AC"},{name:"DC"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63cb8d27bfc36b14836dfbc2"),
+    '1': ObjectId("63cb8d27bfc36b14836dfbc3")
+  }
+}
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find()
+[
+  { _id: ObjectId("63cb8c10bfc36b14836dfbc0"), name: 'JANE dOE' },
+  {
+    _id: ObjectId("63cb8cc5bfc36b14836dfbc1"),
+    name: 'Mike',
+    age: 20,
+    hobbies: [ 'singing' ]
+  },
+  { _id: ObjectId("63cb8d27bfc36b14836dfbc2"), name: 'AC' },
+  { _id: ObjectId("63cb8d27bfc36b14836dfbc3"), name: 'DC' }
+]
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find.sort({name:1}).limit(3)
+TypeError: db.users.find.sort is not a function
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find.sort({name:1}).limit(2)
+TypeError: db.users.find.sort is not a function
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find().sort({name:1}).limit(2)
+[
+  { _id: ObjectId("63cb8d27bfc36b14836dfbc2"), name: 'AC' },
+  { _id: ObjectId("63cb8d27bfc36b14836dfbc3"), name: 'DC' }
+]
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find().limit(2)
+[
+  { _id: ObjectId("63cb8c10bfc36b14836dfbc0"), name: 'JANE dOE' },
+  {
+    _id: ObjectId("63cb8cc5bfc36b14836dfbc1"),
+    name: 'Mike',
+    age: 20,
+    hobbies: [ 'singing' ]
+  }
+]
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({name:"Mike"})
+[
+  {
+    _id: ObjectId("63cb8cc5bfc36b14836dfbc1"),
+    name: 'Mike',
+    age: 20,
+    hobbies: [ 'singing' ]
+  }
+]
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({name:"mike"})
+
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({name:"Mike"},{name:1 , age:1}_
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:44)
+
+> 1 | db.users.find({name:"Mike"},{name:1 , age:1}_
+    |                                             ^
+  2 |
+
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({name:"Mike"},{name:1 , age:1}
+...
+... db.users.find({name:"Mike"},{name:1 , age:1})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (3:0)
+
+  1 | db.users.find({name:"Mike"},{name:1 , age:1}
+  2 |
+> 3 | db.users.find({name:"Mike"},{name:1 , age:1})
+    | ^
+  4 |
+
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({name:"Mike"},{name:1 , age:1})
+[
+  { _id: ObjectId("63cb8cc5bfc36b14836dfbc1"), name: 'Mike', age: 20 }
+]
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({name: {$in : [ "Jane","Mike":]}}_
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:43)
+
+> 1 | db.users.find({name: {$in : [ "Jane","Mike":]}}_
+    |                                            ^
+  2 |
+
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({name: {$in : [ "Jane","Mike":]}})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:43)
+
+> 1 | db.users.find({name: {$in : [ "Jane","Mike":]}})
+    |                                            ^
+  2 |
+
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({name: {$in : [ "Jane","Mike"]}})
+[
+  {
+    _id: ObjectId("63cb8cc5bfc36b14836dfbc1"),
+    name: 'Mike',
+    age: 20,
+    hobbies: [ 'singing' ]
+  }
+]
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({age: {$exists :true }})
+[
+  {
+    _id: ObjectId("63cb8cc5bfc36b14836dfbc1"),
+    name: 'Mike',
+    age: 20,
+    hobbies: [ 'singing' ]
+  }
+]
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({age : {$gte: 20 , $lte:30}})
+[
+  {
+    _id: ObjectId("63cb8cc5bfc36b14836dfbc1"),
+    name: 'Mike',
+    age: 20,
+    hobbies: [ 'singing' ]
+  }
+]
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({age : {$lte: 20 , $gte:30}})
+
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({age : {$lte: 20 , $gte:30}})
+
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.insertMany([{ name "King"  , balance:1000000 , debt:20000} , {name:"Kong" , balance : 15000000 , debt: 250000}])
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:28)
+
+> 1 | db.users.insertMany([{ name "King"  , balance:1000000 , debt:20000} , {name:"Kong" , balance : 15000000 , debt: 250000}])
+    |                             ^
+  2 |
+
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.insertMany([{ name: "King"  , balance:1000000 , debt:20000} , {name:"Kong" , balance : 15000000 , debt: 250000}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63cb9165bfc36b14836dfbc4"),
+    '1': ObjectId("63cb9165bfc36b14836dfbc5")
+  }
+}
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({$expr: {$gt: ["debt" , "balance"]})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:49)
+
+> 1 | db.users.find({$expr: {$gt: ["debt" , "balance"]})
+    |                                                  ^
+  2 |
+
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({$expr: {$gt: ["debt" , "balance"]})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:49)
+
+> 1 | db.users.find({$expr: {$gt: ["debt" , "balance"]})
+    |                                                  ^
+  2 |
+
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.users.find({$expr: {$gt: ["debt" , "balance"]}})
+[
+  { _id: ObjectId("63cb8c10bfc36b14836dfbc0"), name: 'JANE dOE' },
+  {
+    _id: ObjectId("63cb8cc5bfc36b14836dfbc1"),
+    name: 'Mike',
+    age: 20,
+    hobbies: [ 'singing' ]
+  },
+  { _id: ObjectId("63cb8d27bfc36b14836dfbc2"), name: 'AC' },
+  { _id: ObjectId("63cb8d27bfc36b14836dfbc3"), name: 'DC' },
+  {
+    _id: ObjectId("63cb9165bfc36b14836dfbc4"),
+    name: 'King',
+    balance: 1000000,
+    debt: 20000
+  },
+  {
+    _id: ObjectId("63cb9165bfc36b14836dfbc5"),
+    name: 'Kong',
+    balance: 15000000,
+    debt: 250000
+  }
+]
+Atlas atlas-keft0m-shard-0 [primary] appdb> db.uses.deleteOne({name : "King"})
+{ acknowledged: true, deletedCount: 0 }
+Atlas atlas-keft0m-shard-0 [primary] appdb>
